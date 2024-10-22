@@ -8,21 +8,39 @@ class House:
     def __len__(self):
         return self.number_of_floors
 
+    def __eq__(self, other):
+        isinstance(other, int)
+        isinstance(other, House)
+        return self.number_of_floors == other.number_of_floors
+
+    def __lt__(self, other):
+        return self.number_of_floors < other.number_of_floors
+
+    def __le__(self, other):
+        return self.number_of_floors <= other.number_of_floors
+
+    def __gt__(self, other):
+        return self.number_of_floors > other.number_of_floors
+
+    def __ge__(self, other):
+        return self.number_of_floors >= other.number_of_floors
+
+    def __ne__(self, other):
+        return self.number_of_floors != other.number_of_floors
+
+    def __add__(self, value: int):
+        if isinstance(value, int):
+            return House(self.name, self.number_of_floors + value)
+
+    def __radd__(self, value):
+        return House(self.name, self.number_of_floors + value)
+
+    def __iadd__(self, value):
+        return House(self.name, self.number_of_floors + value)
 
     def __str__(self):
         return f'Название: {self.name}, кол-во этажей: {self.number_of_floors}'
 
-    def __eq__(self, other):
-        ...
-
-    def __add__(self, value):
-        ...
-
-    def __radd__(self, value):
-        ...
-
-    def __iadd__(self, value):
-        ...
 
     def go_to(self, new_floor):
         int(new_floor)
