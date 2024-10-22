@@ -9,8 +9,6 @@ class House:
         return self.number_of_floors
 
     def __eq__(self, other):
-        isinstance(other, int)
-        isinstance(other, House)
         return self.number_of_floors == other.number_of_floors
 
     def __lt__(self, other):
@@ -29,8 +27,7 @@ class House:
         return self.number_of_floors != other.number_of_floors
 
     def __add__(self, value: int):
-        if isinstance(value, int):
-            return House(self.name, self.number_of_floors + value)
+        return House(self.name, self.number_of_floors + value)
 
     def __radd__(self, value):
         return House(self.name, self.number_of_floors + value)
