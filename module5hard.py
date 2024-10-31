@@ -2,7 +2,7 @@
 
 class User:
 
-    def __init__(self, nickname, password, age):
+    def __init__(self, nickname: str, password: str, age):
         self.nickname = nickname
         self.password = hash(password)
         self.age = age
@@ -10,8 +10,8 @@ class User:
     def __contains__(self, item):
         for user in item:
             if self.nickname == user.nickname:
-
-
+                return True
+        return False
 
 
 class Video:
@@ -19,7 +19,7 @@ class Video:
     def __init__(self, title, duration, adult_mode=False):
         self.title = title
         self.duration = duration
-        self._time_now = 0
+        self.time_now = 0
         self.adult_mode = adult_mode
 
 class UrTube:
@@ -31,14 +31,15 @@ class UrTube:
     def log_in(self, nickname, password):
         for user in self.users:
             if nickname == user.nickname and hash(password) == user.password:
-                ...
+                self.current_user = user
 
     def register(self, nickname, password, age):
         tem_user = User(nickname, password, age)
         if tem_user not in self.users:
             self.users.append(tem_user)
         else:
-            print()
+            print(f"Пользователь {tem_user.nickname} уже существует.")
+        self.log_in(tem_user.nickname, tem_user.password)
 
 
     def log_out(self):
@@ -50,6 +51,10 @@ class UrTube:
     def get_videos(self):
         ...
 
-u1 = User()
-v1 = Video()
+    def watch_video(self):
+        ...
+    
+
+u1 = User("Igor", "abc", 19)
+# v1 = Video()
 urban_tube = UrTube()
