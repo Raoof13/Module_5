@@ -43,10 +43,10 @@ class UrTube:
 
 
     def log_out(self):
-        ...
+        self.current_user = None
 
-    def add(self):
-        ...
+    def add(self, title):
+        self.videos.append(title)
 
     def get_videos(self):
         ...
