@@ -45,8 +45,10 @@ class UrTube:
     def log_out(self):
         self.current_user = None
 
-    def add(self, title):
-        self.videos.append(title)
+    def add(self, *args):
+        for new_video in args:
+            if new_video not in self.videos:
+                self.videos.append(new_video)
 
     def get_videos(self):
         ...
