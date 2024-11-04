@@ -4,39 +4,38 @@ import time
 
 
 class User:
-
-    def __init__(self, nickname: str, password: str, age: int):
+    def __init__(self, nickname, password, age):
         self.nickname = nickname
         self.password = hash(password)
         self.age = age
 
-    def __contains__(self, item):
-        for user in item:
-            if self.nickname == user.nickname:
-                return True
-        return False
+
+    def __eq__(self, other):
+        return self.nickname == other.nickname
+
+    def __str__(self):
+        return f"{self.nickname}"
 
 
 class Video:
-
     def __init__(self, title, duration, adult_mode=False):
         self.title = title
         self.duration = duration
         self.time_now = 0
         self.adult_mode = adult_mode
 
-    def __str__(self):
-        return self.title
+    def __eq__(self, other):
+        return self.title.lower() == other.title.lower()
 
-    def __repr__(self):
-        return f"Video(title={self.title}, duration={self.duration}, adult_mode={self.adult_mode})"
+    def __str__(self):
+        return f"Video(title='{self.title}', duration={self.duration}, adult_mode={self.adult_mode})"
 
 
 class UrTube:
     def __init__(self):
         self.users = []
         self.videos = []
-        self.current_user = 0
+        self.current_user = None
 
     def log_in(self, nickname, password):
         for user in self.users:
@@ -47,13 +46,13 @@ class UrTube:
         tem_user = User(nickname, password, age)
         if tem_user not in self.users:
             self.users.append(tem_user)
+            self.current_user = tem_user
         else:
-            print(f"Пользователь {tem_user.nickname} уже существует.")
-        self.log_in(tem_user.nickname, tem_user.password)
+            print(f"Пользователь {nickname} уже существует.")
 
 
     def log_out(self):
-        self.current_user = None
+            self.current_user = None
 
     def add(self, *args):
         for new_video in args:
@@ -67,31 +66,30 @@ class UrTube:
                 list_of_titles.append(video.title)
         return list_of_titles
 
-
-    def watch_video(self, name_film: str):
+    def watch_video(self, title):
         if not self.current_user:
-            print('Войдите в аккаунт, чтобы смотреть видео')
+            print("Войдите в аккаунт, чтобы смотреть видео")
             return
 
-        if _film.adult_mode and self.current_user.age < 18:
-            print("Вам нет 18 лет, пожалуйста покиньте страницу")
-            return
+        for video in self.videos:
+            if video.title == title:
+                if video.adult_mode and self.current_user.age < 18:
+                    print("Вам нет 18 лет, пожалуйста покиньте страницу")
+                    return
 
-        for i in range(_film.duration):
-                    print(_film, end=' ')
+                for second in range(1, video.duration + 1):
+                    print(second, end=' ')
                     time.sleep(1)
-                    _film.time_now += 1
-                _film.time_now = 0
-                print('Конец видео')
+                print("Конец видео")
+                return
 
-if __name__ == '__main__':
-    ur = UrTube()
-    v1 = Video('Лучший язык программирования 2024 года', 200)
-    v2 = Video('Для чего девушкам парень программист?', 10, adult_mode=True)
 
-    # Добавление видео
-    ur.add(v1, v2)
+ur = UrTube()
+v1 = Video('Лучший язык программирования 2024 года', 200)
+v2 = Video('Для чего девушкам парень программист?', 10, adult_mode=True)
 
+# Добавление видео
+ur.add(v1, v2)
 
 # Проверка поиска
 print(ur.get_videos('лучший'))
